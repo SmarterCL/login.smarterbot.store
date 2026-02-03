@@ -1,7 +1,7 @@
 import { UserButton } from '@clerk/nextjs'
 import { currentUser } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
-import { supabase } from '@/lib/supabase'
+
 
 export default async function DashboardPage() {
   const user = await currentUser()
@@ -10,45 +10,6 @@ export default async function DashboardPage() {
     redirect('/sign-in')
   }
 
-  // Verificar autonomía contra Supabase
-  const email = user.emailAddresses[0].emailAddress
-  const { data: profile, error } = await supabase
-    .from('profiles')
-    .select('*')
-    .eq('email', email)
-    .single()
-
-  const isAuthorized = !!profile
-
-  if (!isAuthorized) {
-    return (
-      <main className="min-h-screen bg-gradient-to-br from-red-50 to-orange-100 flex items-center justify-center p-6">
-        <div className="bg-white rounded-3xl shadow-2xl p-10 max-w-md w-full text-center border-t-8 border-red-500">
-          <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-6">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-            </svg>
-          </div>
-          <h1 className="text-2xl font-bold text-gray-900 mb-2">Acceso no autorizado</h1>
-          <p className="text-gray-600 mb-8">
-            Tu cuenta ({email}) no está vinculada a una suscripción activa de SmarterOS.
-          </p>
-          <div className="space-y-4">
-            <a
-              href="mailto:soporte@smarterbot.cl"
-              className="block w-full py-3 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-xl transition-colors shadow-lg shadow-red-200"
-            >
-              Contactar Soporte
-            </a>
-            <div className="flex items-center justify-center pt-2">
-              <UserButton afterSignOutUrl="/" />
-              <span className="ml-2 text-sm text-gray-500 font-medium">Cerrar Sesión</span>
-            </div>
-          </div>
-        </div>
-      </main>
-    )
-  }
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
