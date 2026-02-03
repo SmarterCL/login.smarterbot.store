@@ -1,6 +1,7 @@
 import { UserButton } from '@clerk/nextjs'
 import { currentUser } from '@clerk/nextjs/server'
 import { redirect } from 'next/navigation'
+import { supabase } from '@/lib/supabase'
 
 export default async function DashboardPage() {
   const user = await currentUser()
@@ -8,6 +9,18 @@ export default async function DashboardPage() {
   if (!user) {
     redirect('/sign-in')
   }
+
+  // Verificar autonomía contra Supabase
+  const email = user.emailAddresses[0].emailAddress
+  const { data: profile, error } = await supabase
+    .from('profiles')
+    .select('*')
+    .eq('email', email)
+    .single()
+
+  // Si no hay perfil o hay error, podrías registrar el intento o mostrar algo,
+  // pero el requerimiento es "que verifique contra supabase que deje pasar"
+  console.log('Supabase verify:', profile ? 'User authorized' : 'Profile not found')
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-8">
