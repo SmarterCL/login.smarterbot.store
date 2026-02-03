@@ -14,7 +14,7 @@
   "license": "ISC",
   "type": "module",
   "dependencies": {
-    "@clerk/nextjs": "^6.35.5",
+    "@clerk/nextjs": "^6.37.1",
     "@supabase/supabase-js": "^2.94.0",
     "@tailwindcss/postcss": "^4.1.17",
     "next": "^16.0.5",
