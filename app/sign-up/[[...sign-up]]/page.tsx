@@ -11,13 +11,19 @@ export default function SignUpPage() {
           Únete al ecosistema SmarterOS
         </p>
       </div>
-      
-      <div className="bg-white p-8 rounded-2xl shadow-2xl">
-        <SignUp 
+
+      <div className="bg-white p-4 sm:p-8 rounded-2xl shadow-2xl w-full max-w-[400px]">
+        <SignUp
           appearance={{
             elements: {
-              rootBox: "mx-auto",
-              card: "shadow-none",
+              rootBox: "mx-auto w-full",
+              card: "shadow-none w-full",
+              headerTitle: "text-2xl font-bold text-center",
+              headerSubtitle: "text-center text-gray-600",
+              socialButtonsBlockButton: "w-full min-h-[48px] sm:min-h-[52px] bg-white border-2 border-gray-200 hover:border-blue-500 hover:bg-blue-50 transition-all text-base",
+              formButtonPrimary: "w-full min-h-[48px] sm:min-h-[52px] bg-blue-600 hover:bg-blue-700 transition-colors text-base font-semibold",
+              footerActionLink: "text-blue-600 hover:text-blue-700",
+              formFieldInput: "min-h-[48px] sm:min-h-[52px] text-base",
             }
           }}
           routing="path"
